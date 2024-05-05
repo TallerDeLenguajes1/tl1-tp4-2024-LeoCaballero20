@@ -15,7 +15,7 @@
  Nodo * crearNodo(Tarea nuevaTarea);
  void insertarNodo(Nodo ** listaTareas, Nodo * nuevoNodo);
  Nodo * crearLista();
- Nodo * quitarNodo(Nodo * listaTareas, int id);
+ Nodo * quitarNodo(Nodo ** listaTareas, int id);
 
  int main() {
     Nodo * listaTareasPendientes = crearLista();
@@ -47,11 +47,10 @@
     while (seguir == 1) { 
         printf("Escriba el ID de la tarea que ya realizó: \n");
         scanf("%d", &idRealizada);
-        insertarNodo(&listaTareasRealizadas, quitarNodo(listaTareasPendientes, idRealizada));
+        insertarNodo(&listaTareasRealizadas, quitarNodo(&listaTareasPendientes, idRealizada));
         printf("¿Desea marcar otra tarea como realizada?\n");
         printf("Inserte 1 para SI o 0 para NO\n");
         scanf("%d", &seguir);
-        printf("Prueba para ver listas");
     }
  }
 
@@ -71,17 +70,16 @@
     return NULL;
  }
 
- Nodo * quitarNodo(Nodo * listaTareas, int id) {
-    Nodo * Aux = listaTareas;
-    Nodo * Anterior;
-    while (Aux && Aux->T.TareaID != id) {
-        Anterior = Aux; 
-        Aux = Aux->Siguiente;
+ Nodo * quitarNodo(Nodo ** listaTareas, int id) {
+    Nodo ** Aux = listaTareas;
+    while ((*Aux)->Siguiente != NULL && (*Aux)->T.TareaID != id) {
+        Aux = &(*Aux)->Siguiente;
     }
-    if (Aux->T.TareaID == id) {
-        Anterior->Siguiente = Aux->Siguiente;
-        Aux->Siguiente = NULL;
-        return Aux;
+    if (*Aux) {
+        Nodo * nodoRealizado = *Aux;
+        *Aux = (*Aux)->Siguiente;
+        nodoRealizado->Siguiente = NULL;
+        return nodoRealizado;
     }
  }
 
