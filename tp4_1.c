@@ -14,7 +14,10 @@
 
  Nodo * crearNodo(Tarea nuevaTarea);
  void insertarNodo(Nodo ** listaTareas, Nodo * nuevoNodo);
- Nodo *crearLista();
+ Nodo * crearLista();
+ Nodo * quitarNodo(Nodo ** listaTareas, int id);
+ void mostrarLista(Nodo * listaTareas);
+ void consultarTareaPorId(int id);
 
  int main() {
     Nodo * listaTareasPendientes = crearLista();
@@ -40,6 +43,21 @@
         printf("Inserte 1 para SI o 0 para NO\n");
         scanf("%d", &seguir);
     }
+    Nodo * listaTareasRealizadas = crearLista();
+    int idRealizada;
+    seguir=1;
+    while (seguir == 1) { 
+        printf("Escriba el ID de la tarea que ya realizó: \n");
+        scanf("%d", &idRealizada);
+        insertarNodo(&listaTareasRealizadas, quitarNodo(&listaTareasPendientes, idRealizada));
+        printf("¿Desea marcar otra tarea como realizada?\n");
+        printf("Inserte 1 para SI o 0 para NO\n");
+        scanf("%d", &seguir);
+    }
+    printf("\nLas tareas que quedaron pendientes son:\n\n");
+    mostrarLista(listaTareasPendientes);
+    printf("\nLas tareas que fueron realizadas son:\n\n");
+    mostrarLista(listaTareasRealizadas);
  }
 
  Nodo * crearNodo(Tarea nuevaTarea) {
@@ -54,12 +72,31 @@
     *listaTareas = nuevoNodo;
  }
 
- Nodo *crearLista() {
+ Nodo * crearLista() {
     return NULL;
  }
 
- /*void mostrarLista(Nodo * listaTareas) {
-   while (Aux) {
+ Nodo * quitarNodo(Nodo ** listaTareas, int id) {
+    Nodo ** Aux = listaTareas;
+    while ((*Aux)->Siguiente != NULL && (*Aux)->T.TareaID != id) {
+        Aux = &(*Aux)->Siguiente;
+    }
+    if (*Aux) {
+        Nodo * nodoRealizado = *Aux;
+        *Aux = (*Aux)->Siguiente;
+        nodoRealizado->Siguiente = NULL;
+        return nodoRealizado;
+    }
+ }
 
-   }
- }*/
+
+ void mostrarLista(Nodo * listaTareas) {
+    Nodo * Aux = listaTareas;
+    while (Aux)
+    {
+        printf("ID: %d\n", Aux->T.TareaID);
+        printf("Descripción: %s\n", Aux->T.Descripcion);
+        printf("Duración: %d\n\n", Aux->T.Duracion);
+        Aux = Aux->Siguiente;
+    }
+ }
