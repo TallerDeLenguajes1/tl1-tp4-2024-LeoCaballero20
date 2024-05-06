@@ -18,6 +18,7 @@
  Nodo * quitarNodo(Nodo ** listaTareas, int id);
  void mostrarLista(Nodo * listaTareas);
  void consultarTareaPorId(Nodo * listaTareas, int id);
+ void consultarTareaPorPalabraClave(Nodo * listaTareas, char * palabraClave);
 
  int main() {
     Nodo * listaTareasPendientes = crearLista();
@@ -62,6 +63,10 @@
     consultarTareaPorId(listaTareasRealizadas,1000);
     consultarTareaPorId(listaTareasPendientes,1001);
     consultarTareaPorId(listaTareasRealizadas,1001);
+    consultarTareaPorPalabraClave(listaTareasPendientes,"limpiar");
+    consultarTareaPorPalabraClave(listaTareasRealizadas,"limpiar");
+    consultarTareaPorPalabraClave(listaTareasPendientes,"ordenar");
+    consultarTareaPorPalabraClave(listaTareasRealizadas,"ordenar"); 
  }
 
  Nodo * crearNodo(Tarea nuevaTarea) {
@@ -107,6 +112,20 @@
  void consultarTareaPorId(Nodo * listaTareas, int id) {
    Nodo * Aux = listaTareas;
    while (Aux && Aux->T.TareaID != id) {
+      Aux = Aux->Siguiente;
+   }
+   if (Aux) {
+      printf("La tarea se encuentra en esta lista\n");
+      printf("Descripción: %s\n", Aux->T.Descripcion);
+      printf("Duración: %d\n", Aux->T.Duracion);
+   } else {
+      printf("La tarea no se encuentra en esta lista\n");
+   }
+ }
+
+ void consultarTareaPorPalabraClave(Nodo * listaTareas, char * palabraClave) {
+   Nodo * Aux = listaTareas;
+   while (Aux && strstr(Aux->T.Descripcion,palabraClave) == NULL ) {
       Aux = Aux->Siguiente;
    }
    if (Aux) {
