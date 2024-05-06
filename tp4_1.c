@@ -35,7 +35,6 @@
         char * descripcion = (char*)malloc(sizeof(Buffer)+1);
         strcpy(descripcion,Buffer);
         nuevaTarea.Descripcion = descripcion;
-        printf("La descrip es: %s\n", nuevaTarea.Descripcion);
         printf("Ingrese la duración de la tarea entre 10 y 100: \n");
         scanf("%d", &nuevaTarea.Duracion);
         nuevaTarea.TareaID = id;
