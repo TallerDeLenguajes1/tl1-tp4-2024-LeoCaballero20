@@ -16,6 +16,7 @@
  void insertarNodo(Nodo ** listaTareas, Nodo * nuevoNodo);
  Nodo * crearLista();
  Nodo * quitarNodo(Nodo ** listaTareas, int id);
+ void mostrarLista(Nodo * listaTareas);
 
  int main() {
     Nodo * listaTareasPendientes = crearLista();
@@ -52,6 +53,10 @@
         printf("Inserte 1 para SI o 0 para NO\n");
         scanf("%d", &seguir);
     }
+    printf("\nLas tareas que quedaron pendientes son:\n\n");
+    mostrarLista(listaTareasPendientes);
+    printf("\nLas tareas que fueron realizadas son:\n\n");
+    mostrarLista(listaTareasRealizadas);
  }
 
  Nodo * crearNodo(Tarea nuevaTarea) {
@@ -84,8 +89,13 @@
  }
 
 
- /*void mostrarLista(Nodo * listaTareas) {
-   while (Aux) {
-
-   }
- }*/
+ void mostrarLista(Nodo * listaTareas) {
+    Nodo * Aux = listaTareas;
+    while (Aux)
+    {
+        printf("ID: %d\n", Aux->T.TareaID);
+        printf("Descripción: %s\n", Aux->T.Descripcion);
+        printf("Duración: %d\n\n", Aux->T.Duracion);
+        Aux = Aux->Siguiente;
+    }
+ }
